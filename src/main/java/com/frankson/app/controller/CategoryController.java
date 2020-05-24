@@ -1,6 +1,6 @@
-package com.frankson.app.resources;
+package com.frankson.app.controller;
 
-import com.frankson.app.domain.Category;
+import com.frankson.app.model.Category;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoryResource {
+public class CategoryController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> list() {
