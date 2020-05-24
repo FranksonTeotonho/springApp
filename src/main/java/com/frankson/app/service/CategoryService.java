@@ -1,5 +1,6 @@
 package com.frankson.app.service;
 
+import com.frankson.app.exception.ObjectNotFoundException;
 import com.frankson.app.model.Category;
 import com.frankson.app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,6 @@ public class CategoryService {
 
     public Category findCategory(Integer id) {
         Optional<Category> category = categoryRepository.findById(id);
-        return  category.orElse(null);
+        return  category.orElseThrow(() -> new ObjectNotFoundException(String.format("Object not found! id: %s, type: %s", id, Category.class.getName())));
     }
 }

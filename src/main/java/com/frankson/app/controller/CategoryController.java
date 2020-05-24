@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/categories")
+@RequestMapping(value = "api/v1/categories")
 public class CategoryController {
 
     @Autowired
