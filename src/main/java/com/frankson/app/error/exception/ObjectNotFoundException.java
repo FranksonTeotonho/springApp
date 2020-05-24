@@ -1,4 +1,4 @@
-package com.frankson.app.exception;
+package com.frankson.app.error.exception;
 
 public class ObjectNotFoundException extends RuntimeException{
 

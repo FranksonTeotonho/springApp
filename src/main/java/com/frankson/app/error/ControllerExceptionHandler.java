@@ -1,5 +1,6 @@
-package com.frankson.app.exception;
+package com.frankson.app.error;
 
+import com.frankson.app.error.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

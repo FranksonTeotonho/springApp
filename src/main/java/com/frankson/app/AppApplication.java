@@ -1,13 +1,8 @@
 package com.frankson.app;
 
-import com.frankson.app.model.Category;
-import com.frankson.app.model.City;
-import com.frankson.app.model.Item;
-import com.frankson.app.model.State;
-import com.frankson.app.repository.CategoryRepository;
-import com.frankson.app.repository.CityRepository;
-import com.frankson.app.repository.ItemRepository;
-import com.frankson.app.repository.StateRepository;
+import com.frankson.app.model.*;
+import com.frankson.app.model.enums.ClientType;
+import com.frankson.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +21,10 @@ public class AppApplication implements CommandLineRunner {
     private StateRepository stateRepository;
     @Autowired
     private CityRepository cityRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
@@ -62,5 +61,16 @@ public class AppApplication implements CommandLineRunner {
 
         stateRepository.saveAll(Arrays.asList(state1, state2));
         cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+
+        Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "60944720390", ClientType.INDIVIDUAL_ENTITY);
+        client1.getPhoneNumbers().addAll(Arrays.asList("1234567","7654321"));
+
+        Address address1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "65915782", client1, city1);
+        Address address2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "65915500", client1, city2);
+
+        client1.getAddresses().addAll(Arrays.asList(address1, address2));
+
+        clientRepository.save(client1);
+        addressRepository.saveAll(Arrays.asList(address1, address2));
     }
 }

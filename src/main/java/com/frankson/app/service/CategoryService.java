@@ -1,6 +1,6 @@
 package com.frankson.app.service;
 
-import com.frankson.app.exception.ObjectNotFoundException;
+import com.frankson.app.error.exception.ObjectNotFoundException;
 import com.frankson.app.model.Category;
 import com.frankson.app.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

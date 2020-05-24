@@ -1,4 +1,4 @@
-package com.frankson.app.exception;
+package com.frankson.app.error;
 
 import java.io.Serializable;
 
