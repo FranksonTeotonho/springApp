@@ -7,23 +7,30 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Category implements Serializable {
+public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private Double price;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Item> items = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "item_category",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories = new ArrayList<>();
 
-    public Category() {
+    public Item() {
+
     }
 
-    public Category(Integer id, String name) {
+    public Item(Integer id, String name, Double price) {
         this.id = id;
         this.name = name;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -42,12 +49,16 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 
     @Override
@@ -55,10 +66,10 @@ public class Category implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Category category = (Category) o;
+        Item item = (Item) o;
 
-        //return id != null ? id.equals(category.id) : category.id == null;
-        return Objects.equals(id, category.id);
+        //return id != null ? id.equals(item.id) : item.id == null;
+        return Objects.equals(id, item.id);
     }
 
     @Override
