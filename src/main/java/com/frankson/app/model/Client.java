@@ -1,5 +1,6 @@
 package com.frankson.app.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.frankson.app.model.enums.ClientType;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Client implements Serializable {
     private String cpfOrCnpj;
     private Integer type;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "client")
     private List<Address> addresses = new ArrayList<>();
 
