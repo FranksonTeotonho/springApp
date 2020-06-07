@@ -2,12 +2,14 @@ package com.frankson.app;
 
 import com.frankson.app.model.*;
 import com.frankson.app.model.enums.ClientType;
+import com.frankson.app.model.enums.PaymentStatus;
 import com.frankson.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -25,6 +27,10 @@ public class AppApplication implements CommandLineRunner {
     private ClientRepository clientRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private PurchaseOrderRepository purchaseOrderRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
@@ -72,5 +78,21 @@ public class AppApplication implements CommandLineRunner {
 
         clientRepository.save(client1);
         addressRepository.saveAll(Arrays.asList(address1, address2));
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        PurchaseOrder purchaseOrder1 = new PurchaseOrder(null, simpleDateFormat.parse("30/09/2017 10:32"), client1, address1);
+        PurchaseOrder purchaseOrder2 = new PurchaseOrder(null, simpleDateFormat.parse("10/10/2017 19:35"), client1, address2);
+
+        Payment payment1 = new PaymentByCreditCard(null, PaymentStatus.CONCLUDED, purchaseOrder1, 6);
+        purchaseOrder1.setPayment(payment1);
+
+        Payment payment2 = new PaymentInCash(null, PaymentStatus.PENDENT, purchaseOrder2, simpleDateFormat.parse("20/10/2017 00:00"), null);
+        purchaseOrder2.setPayment(payment2);
+
+        client1.getPurchaseOrders().addAll(Arrays.asList(purchaseOrder1, purchaseOrder2));
+
+        purchaseOrderRepository.saveAll(Arrays.asList(purchaseOrder1, purchaseOrder2));
+        paymentRepository.saveAll(Arrays.asList(payment1, payment2));
     }
 }
